@@ -28,4 +28,4 @@ class MetaTowersOfHanoi<0, From, To, Spare>
 	static_assert(From != To && To != Spare && From != Spare, "Disk labels must be different");
 };
 
-#endif
+#endif // _META_TOWERS_OF_HANOI_H_

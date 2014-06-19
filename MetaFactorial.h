@@ -13,4 +13,4 @@ size_t metaFactorial<0>()
 	return 1;
 }
 
-#endif
+#endif // _META_FACTORIAL_H_

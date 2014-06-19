@@ -15,4 +15,4 @@ void metaNumberPrint<0>()
 {
 }
 
-#endif
+#endif // _META_NUMBER_PRINTER_H_

@@ -25,4 +25,4 @@ struct MetaGCD<0, X>
 	const size_t gcd = X;
 };
 
-#endif
+#endif // _META_GCD_H_

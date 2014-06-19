@@ -52,4 +52,4 @@ struct SymmetricalMatrix2X2Power <0, A11, A12, A21, A22>
 	}
 };
 
-#endif
+#endif // _META_FIBONACCI_H_
