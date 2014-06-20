@@ -3,16 +3,9 @@
 
 #include <iostream>
 
-template <size_t N, size_t From, size_t To, size_t Spare>
-void metaTowersOfHanoi()
+template<size_t N, size_t From, size_t To, size_t Spare>
+struct MetaTowersOfHanoi
 {
-	MetaTowersOfHanoi<N, From, To, Spare>();
-}
-
-template <size_t N, size_t From, size_t To, size_t Spare>
-class MetaTowersOfHanoi
-{
-public:
 	MetaTowersOfHanoi()
 	{
 		static_assert(From != To && To != Spare && From != Spare, "Disk labels must be different");
@@ -22,10 +15,16 @@ public:
 	}
 };
 
-template <size_t From, size_t To, size_t Spare>
-class MetaTowersOfHanoi<0, From, To, Spare>
+template<size_t From, size_t To, size_t Spare>
+struct MetaTowersOfHanoi<0, From, To, Spare>
 {
 	static_assert(From != To && To != Spare && From != Spare, "Disk labels must be different");
 };
+
+template<size_t N, size_t From, size_t To, size_t Spare>
+void metaTowersOfHanoi()
+{
+	MetaTowersOfHanoi<N, From, To, Spare>();
+}
 
 #endif // _META_TOWERS_OF_HANOI_H_

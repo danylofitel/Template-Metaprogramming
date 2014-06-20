@@ -2,44 +2,78 @@
 #define _META_PRIMES_H_
 
 #include <iostream>
+#include "MetaConditions.h"
 
-template <size_t P, size_t I>
+// Square Root Time
+
+template<size_t N, size_t C>
 struct MetaPrimeCheckHelp
 {
-	const bool isPrime;
-	MetaPrimeCheckHelp() : isPrime((P % I) && MetaPrimeCheckHelp<P, I - 1>().isPrime)
-	{
-	}
+	typedef
+		typename If<(C * C > N), TrueType,
+		typename If<(N % C == 0), FalseType, MetaPrimeCheckHelp<N, C + 1>>::Type>::Type Type;
+	enum { Value = Type::Value };
 };
 
-template <size_t P>
-struct MetaPrimeCheckHelp<P, 1>
-{
-	const bool isPrime;
-	MetaPrimeCheckHelp() : isPrime(true)
-	{
-	}
-};
-
-template <size_t P>
+template<size_t N>
 bool metaPrimeCheck()
 {
-	return MetaPrimeCheckHelp<P, P - 1>().isPrime;
-}
+	return MetaPrimeCheckHelp<N, 2>::Type::Value;
+};
 
-template <>
+template<>
 bool metaPrimeCheck<0>()
 {
 	return false;
+};
+
+template<>
+bool metaPrimeCheck<1>()
+{
+	return false;
+};
+
+// Linear Time
+
+template<size_t P, size_t I>
+struct MetaPrimeCheckLinearHelp
+{
+	const bool isPrime;
+	MetaPrimeCheckLinearHelp() : isPrime((P % I) && MetaPrimeCheckLinearHelp<P, I - 1>().isPrime)
+	{
+	}
+};
+
+template<size_t P>
+struct MetaPrimeCheckLinearHelp<P, 1>
+{
+	const bool isPrime;
+	MetaPrimeCheckLinearHelp() : isPrime(true)
+	{
+	}
+};
+
+template<size_t P>
+bool metaPrimeCheckLinear()
+{
+	return MetaPrimeCheckLinearHelp<P, P - 1>().isPrime;
 }
 
-template <>
-bool metaPrimeCheck<1>()
+template<>
+bool metaPrimeCheckLinear<0>()
 {
 	return false;
 }
 
-template <size_t N>
+template<>
+bool metaPrimeCheckLinear<1>()
+{
+	return false;
+}
+
+// Prime Printer
+
+template<size_t N>
 struct MetaPrimePrintHelp
 {
 	MetaPrimePrintHelp()
@@ -52,7 +86,7 @@ struct MetaPrimePrintHelp
 	}
 };
 
-template <>
+template<>
 struct MetaPrimePrintHelp<0>
 {
 	MetaPrimePrintHelp()
@@ -60,7 +94,7 @@ struct MetaPrimePrintHelp<0>
 	}
 };
 
-template <size_t N>
+template<size_t N>
 void metaPrimePrint()
 {
 	MetaPrimePrintHelp<N>();

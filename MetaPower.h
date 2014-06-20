@@ -1,49 +1,98 @@
 #ifndef _META_POWER_H_
 #define _META_POWER_H_
 
-template <size_t Arg, size_t Pow>
-size_t metaPowerInt()
-{
-	return MetaPowerIntHelp<Pow, Arg>().exp;
-}
+// Logarithmic Time
 
-template <size_t Pow, size_t Mul>
+template<size_t Pow, int Mul>
 struct MetaPowerIntHelp
 {
-	const size_t exp;
+	const int exp;
 	MetaPowerIntHelp() : exp((Pow & 1 ? Mul : 1) * (MetaPowerIntHelp<Pow / 2, Mul * Mul>().exp))
 	{
 	}
 };
 
-template <size_t Mul>
+template<int Mul>
 struct MetaPowerIntHelp<0, Mul>
 {
-	const size_t exp = 1;
+	const int exp = 1;
 };
 
-template <size_t Pow>
-double metaPowerDouble(const double x)
+template<int Arg, size_t Pow>
+int metaPowerInt()
 {
-	return MetaPowerDoubleHelp<Pow>(x).exp;
+	return MetaPowerIntHelp<Pow, Arg>().exp;
 }
 
-template <size_t Pow>
-struct MetaPowerDoubleHelp
+template<class T, size_t Pow>
+struct MetaPowerHelp
 {
-	const double exp;
-	MetaPowerDoubleHelp(const double mul) : exp((Pow & 1 ? mul : 1.0) * (MetaPowerDoubleHelp<Pow / 2>(mul * mul).exp))
+	const T exp;
+	MetaPowerHelp(const T & mul) : exp((Pow & 1 ? mul : 1.0) * (MetaPowerHelp<T, Pow / 2>(mul * mul).exp))
 	{
 	}
 };
 
-template <>
-struct MetaPowerDoubleHelp<0>
+template<class T>
+struct MetaPowerHelp<T, 0>
 {
 	const double exp;
-	MetaPowerDoubleHelp(const double mul) : exp(1.0)
+	MetaPowerHelp(const T & mul) : exp(static_cast<T>(1))
 	{
 	}
 };
+
+template<class T, size_t Pow>
+double metaPower(const T & x)
+{
+	return MetaPowerHelp<T, Pow>(x).exp;
+}
+
+// Linear Time
+
+template<int Arg, size_t Pow>
+struct MetaPowerIntLinear
+{
+	const int pow;
+	MetaPowerIntLinear() : pow(Arg * MetaPowerIntLinear<Arg, Pow - 1>().pow)
+	{
+	}
+};
+
+template<int Arg>
+struct MetaPowerIntLinear<Arg, 0>
+{
+	const int pow = 1;
+};
+
+template<int Arg, size_t Pow>
+int metaPowerIntLinear()
+{
+	return MetaPowerIntLinear<Arg, Pow>().pow;
+}
+
+template<class T, size_t Pow>
+struct MetaPowerLinearHelp
+{
+	const T exp;
+	MetaPowerLinearHelp(const T & mul) : exp(mul * MetaPowerLinearHelp<T, Pow - 1>(mul).exp)
+	{
+	}
+};
+
+template<class T>
+struct MetaPowerLinearHelp<T, 0>
+{
+	const T exp;
+	MetaPowerLinearHelp(const T & mul) : exp(static_cast<T>(1))
+	{
+	}
+};
+
+template<class T, size_t Pow>
+double metaPowerLinear(const T & x)
+{
+	return MetaPowerLinearHelp<T, Pow>(x).exp;
+}
 
 #endif // _META_POWER_H_

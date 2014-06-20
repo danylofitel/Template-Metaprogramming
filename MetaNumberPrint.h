@@ -3,14 +3,14 @@
 
 #include <iostream>
 
-template <size_t N>
+template<size_t N>
 void metaNumberPrint()
 {
 	metaNumberPrint<N - 1>();
 	std::cout << N << std::endl;
 }
 
-template <>
+template<>
 void metaNumberPrint<0>()
 {
 }

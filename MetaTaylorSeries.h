@@ -7,14 +7,14 @@ const size_t SEQUENCE_SIZE = 100;
 
 // Square Root
 
-template <size_t Depth>
+template<size_t Depth>
 double metaSquareRootHelp(const double x)
 {
 	double prev = metaSquareRootHelp<Depth - 1>(x);
 	return 0.5 * (prev + x / prev);
 }
 
-template <>
+template<>
 double metaSquareRootHelp<0>(const double x)
 {
 	return x;
@@ -27,13 +27,13 @@ double metaSquareRoot(const double x)
 
 // Pi
 
-template <size_t Depth>
+template<size_t Depth>
 double metaPiHelp(const bool positive)
 {
 	return (positive ? 1.0 : -1.0) / ((2 * Depth) * (2 * Depth + 1) * (2 * Depth + 2)) + metaPiHelp<Depth + 1>(!positive);
 }
 
-template <>
+template<>
 double metaPiHelp<SEQUENCE_SIZE>(const bool positive)
 {
 	return (positive ? 1.0 : -1.0) / ((2 * SEQUENCE_SIZE) * (2 * SEQUENCE_SIZE + 1) * (2 * SEQUENCE_SIZE + 2));
@@ -46,13 +46,13 @@ double metaPi()
 
 // E
 
-template <size_t Depth>
+template<size_t Depth>
 double metaEHelp(const double acc)
 {
 	return 1 / acc + metaEHelp<Depth + 1>(acc * Depth);
 }
 
-template <>
+template<>
 double metaEHelp<SEQUENCE_SIZE>(const double acc)
 {
 	return 1 / acc;
@@ -65,13 +65,13 @@ double metaE()
 
 // Exponent
 
-template <size_t Depth>
+template<size_t Depth>
 double metaExponentHelp(const double x, const double xn, const double fact)
 {
 	return xn / fact + metaExponentHelp<Depth + 1>(x, xn * x, fact * Depth);
 }
 
-template <>
+template<>
 double metaExponentHelp<SEQUENCE_SIZE>(const double x, const double xn, const double fact)
 {
 	return xn / fact;
@@ -84,13 +84,13 @@ double metaExponent(const double x)
 
 // Natural Logarithm
 
-template <size_t Depth>
+template<size_t Depth>
 double metaNaturalLogarithmHelp(const double x, const double xn)
 {
 	return xn / Depth + metaNaturalLogarithmHelp<Depth + 1>(x, xn * x);
 }
 
-template <>
+template<>
 double metaNaturalLogarithmHelp<SEQUENCE_SIZE>(const double x, const double xn)
 {
 	return xn / SEQUENCE_SIZE;
@@ -107,13 +107,13 @@ double metaNaturalLogarithm(const double x)
 
 // Geometric Series 1 / (1-x)
 
-template <size_t Depth>
+template<size_t Depth>
 double metaGeometricSeriesHelp(const double x, const double xn)
 {
 	return xn + metaGeometricSeriesHelp<Depth + 1>(x, xn * x);
 }
 
-template <>
+template<>
 double metaGeometricSeriesHelp<SEQUENCE_SIZE>(const double x, const double xn)
 {
 	return xn;
@@ -130,7 +130,7 @@ double metaGeometricSeries(const double x)
 
 // Binomial Series (1 + x)^A
 
-template <size_t A, size_t Depth>
+template<size_t A, size_t Depth>
 struct MetaBinomialSeriesHelp
 {
 	const double val;
@@ -139,7 +139,7 @@ struct MetaBinomialSeriesHelp
 	}
 };
 
-template <size_t A>
+template<size_t A>
 struct MetaBinomialSeriesHelp<A, SEQUENCE_SIZE>
 {
 	const double val;
@@ -148,7 +148,7 @@ struct MetaBinomialSeriesHelp<A, SEQUENCE_SIZE>
 	}
 };
 
-template <size_t A>
+template<size_t A>
 double metaBinomialSeries(const double x)
 {
 	if (x <= -1 || x >= 1)
@@ -160,7 +160,7 @@ double metaBinomialSeries(const double x)
 
 // Sin
 
-template <size_t Depth>
+template<size_t Depth>
 struct MetaSinHelp
 {
 	const double val;
@@ -169,7 +169,7 @@ struct MetaSinHelp
 	}
 };
 
-template <>
+template<>
 struct MetaSinHelp<SEQUENCE_SIZE>
 {
 	const double val;
@@ -185,7 +185,7 @@ double MetaSin(const double x)
 
 // Cos
 
-template <size_t Depth>
+template<size_t Depth>
 struct MetaCosHelp
 {
 	const double val;
@@ -194,7 +194,7 @@ struct MetaCosHelp
 	}
 };
 
-template <>
+template<>
 struct MetaCosHelp<SEQUENCE_SIZE>
 {
 	const double val;
@@ -210,7 +210,7 @@ double MetaCos(const double x)
 
 // Sinh
 
-template <size_t Depth>
+template<size_t Depth>
 struct MetaSinhHelp
 {
 	const double val;
@@ -219,7 +219,7 @@ struct MetaSinhHelp
 	}
 };
 
-template <>
+template<>
 struct MetaSinhHelp<SEQUENCE_SIZE>
 {
 	const double val;
@@ -235,7 +235,7 @@ double MetaSinh(const double x)
 
 // Cosh
 
-template <size_t Depth>
+template<size_t Depth>
 struct MetaCoshHelp
 {
 	const double val;
@@ -244,7 +244,7 @@ struct MetaCoshHelp
 	}
 };
 
-template <>
+template<>
 struct MetaCoshHelp<SEQUENCE_SIZE>
 {
 	const double val;

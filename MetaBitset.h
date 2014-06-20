@@ -1,8 +1,8 @@
-#ifndef _META_CONTAINERS_H_
-#define _META_CONTAINERS_H_
+#ifndef _META_BITSET_H_
+#define _META_BITSET_H_
 
-template <unsigned char Byte>
-struct MetaBitSet
+template<unsigned char Byte>
+struct MetaBitset
 {
 	enum
 	{
@@ -21,4 +21,4 @@ struct MetaBitSet
 	};
 };
 
-#endif // _META_CONTAINERS_H_
+#endif // _META_BITSET_H_
