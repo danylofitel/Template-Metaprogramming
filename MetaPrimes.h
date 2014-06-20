@@ -16,21 +16,21 @@ struct MetaPrimeCheckHelp
 };
 
 template<size_t N>
-bool metaPrimeCheck()
+struct MetaPrimeCheck
 {
-	return MetaPrimeCheckHelp<N, 2>::Type::Value;
+	enum { value = MetaPrimeCheckHelp<N, 2>::Value };
 };
 
 template<>
-bool metaPrimeCheck<0>()
+struct MetaPrimeCheck<0>
 {
-	return false;
+	enum { value = 0 };
 };
 
 template<>
-bool metaPrimeCheck<1>()
+struct MetaPrimeCheck<1>
 {
-	return false;
+	enum { value = 0 };
 };
 
 // Linear Time
@@ -38,66 +38,48 @@ bool metaPrimeCheck<1>()
 template<size_t P, size_t I>
 struct MetaPrimeCheckLinearHelp
 {
-	const bool isPrime;
-	MetaPrimeCheckLinearHelp() : isPrime((P % I) && MetaPrimeCheckLinearHelp<P, I - 1>().isPrime)
-	{
-	}
+	enum { value = (P % I) && MetaPrimeCheckLinearHelp<P, I - 1>::value };
 };
 
 template<size_t P>
 struct MetaPrimeCheckLinearHelp<P, 1>
 {
-	const bool isPrime;
-	MetaPrimeCheckLinearHelp() : isPrime(true)
-	{
-	}
+	enum { value = 1 };
 };
 
 template<size_t P>
-bool metaPrimeCheckLinear()
+struct MetaPrimeCheckLinear
 {
-	return MetaPrimeCheckLinearHelp<P, P - 1>().isPrime;
-}
+	enum { value = MetaPrimeCheckLinearHelp<P, P - 1>::value };
+};
 
 template<>
-bool metaPrimeCheckLinear<0>()
+struct MetaPrimeCheckLinear<0>
 {
-	return false;
-}
+	enum { value = false };
+};
 
 template<>
-bool metaPrimeCheckLinear<1>()
+struct MetaPrimeCheckLinear<1>
 {
-	return false;
-}
+	enum { value = false };
+};
 
 // Prime Printer
 
 template<size_t N>
-struct MetaPrimePrintHelp
-{
-	MetaPrimePrintHelp()
-	{
-		MetaPrimePrintHelp<N - 1>();
-		if (metaPrimeCheck<N>())
-		{
-			std::cout << N << " is a prime" << std::endl;
-		}
-	}
-};
-
-template<>
-struct MetaPrimePrintHelp<0>
-{
-	MetaPrimePrintHelp()
-	{
-	}
-};
-
-template<size_t N>
 void metaPrimePrint()
 {
-	MetaPrimePrintHelp<N>();
+	metaPrimePrint<N - 1>();
+	if (MetaPrimeCheck<N>::value)
+	{
+		std::cout << N << " is a prime" << std::endl;
+	}
+}
+
+template<>
+void metaPrimePrint<0>()
+{
 }
 
 #endif // _META_PRIMES_H_

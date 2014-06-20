@@ -1,8 +1,6 @@
 #ifndef _META_LOOPS_H_
 #define _META_LOOPS_H_
 
-#include "MetaOperators.h"
-
 template<int Start, int End, int Exp = 1,
 	template<int U, int V> class ExpOperator,
 	template<int U, int V> class Operator,

@@ -4,137 +4,137 @@
 #include "MetaOperators.h"
 #include "MetaLoops.h"
 
-template<int u, int v>
-struct Divisible
+template<int U, int V>
+struct MetaDivisible
 {
-	enum { value = v % u == 0 ? 1 : 0 };
+	enum { value = V % U == 0 ? 1 : 0 };
 };
 
-template<int u>
-struct Divisible<u, 0>
+template<int U>
+struct MetaDivisible<U, 0>
 {
 	enum { value = -1 };
 };
 
-template<int u, int v>
-struct DivisibleDigit
+template<int U, int V>
+struct MetaDivisibleDigit
 {
-	enum { value = v % u == 0 ? u : 0 };
+	enum { value = V % U == 0 ? U : 0 };
 };
 
-template<int u>
-struct DivisibleDigit<u, 0>
+template<int U>
+struct MetaDivisibleDigit<U, 0>
 {
 	enum { value = -1 };
 };
 
-template<int u>
-struct IsEven
+template<int U>
+struct MetaIsEven
 {
-	enum { value = Divisible<u, 2>::value };
+	enum { value = MetaDivisible<U, 2>::value };
 };
 
-template<int u>
-struct IsOdd
+template<int U>
+struct MetaIsOdd
 {
-	enum { value = Divisible<u, 2>::value == 0 ? 1 : 0 };
+	enum { value = MetaDivisible<U, 2>::value == 0 ? 1 : 0 };
 };
 
-template<int u, int v>
-struct GCD
+template<int U, int V>
+struct MetaGCD
 {
-	enum { value = GCD<v, u % v>::value };
+	enum { value = MetaGCD<V, U % V>::value };
 };
 
-template<int u>
-struct GCD<u, 0>
+template<int U>
+struct MetaGCD<U, 0>
 {
-	enum { value = u };
+	enum { value = U };
 };
 
 template<>
-struct GCD<0, 0>
+struct MetaGCD<0, 0>
 {
 	enum { value = -1 };
 };
 
-template<int u, int v>
-struct LCM
+template<int U, int V>
+struct MetaLCM
 {
-	enum { value = u * v / GCD<u, v>::value };
+	enum { value = U * V / MetaGCD<U, V>::value };
 };
 
-template<int u, int v>
-struct CoPrime
+template<int U, int V>
+struct MetaCoPrime
 {
-	enum { value = GCD<u, v>::value == 1 ? 1 : 0 };
+	enum { value = MetaGCD<U, V>::value == 1 ? 1 : 0 };
 };
 
 template<int a, int b>
-struct Power
+struct MetaIntPower
 {
-	enum { value = a * Power<a, b - 1>::value };
+	enum { value = a * MetaIntPower<a, b - 1>::value };
 };
 
 template<int a>
-struct Power<a, 0>
+struct MetaIntPower<a, 0>
 {
 	enum { value = 1 };
 };
 
-template<int n>
-struct NoOfDivisor
+template<int N>
+struct MetaNoOfDivisor
 {
-	enum { value = MetaForLoop<1, n, 1, Add, Add, Divisible>::value };
+	enum { value = MetaForLoop<1, N, 1, MetaAdd, MetaAdd, MetaDivisible>::value };
 };
 
-template<int n>
-class IsPrime
+template<int N>
+class MetaIsPrime
 {
 public:
-	enum { value = NoOfDivisor<n>::value == 2 ? 1 : 0 };
+	enum { value = MetaNoOfDivisor<N>::value == 2 ? 1 : 0 };
 };
 
-template<int n>
-struct SumOfDivisor
+template<int N>
+struct MetaSumOfDivisor
 {
-	enum { value = MetaForLoop<1, n, 1, Add, Add, DivisibleDigit>::value };
+	enum { value = MetaForLoop<1, N, 1, MetaAdd, MetaAdd, MetaDivisibleDigit>::value };
 };
 
-template<int n>
-struct IsPerfect
+template<int N>
+struct MetaIsPerfect
 {
-	enum { value = SumOfDivisor<n>::value - n == n ? 1 : 0 };
+	enum { value = MetaSumOfDivisor<N>::value - N == N ? 1 : 0 };
 };
 
-template<int n>
-struct Totient
+template<int N>
+struct MetaTotient
 {
-	enum { value = MetaForLoop<1, n, 1, Add, Add, CoPrime>::value };
+	enum { value = MetaForLoop<1, N, 1, MetaAdd, MetaAdd, MetaCoPrime>::value };
 };
 
-template<int n, int v = 0>
-struct TotientVal
+template<int N, int V = 0>
+struct MetaTotientVal
 {
-	enum { value = Totient<n>::value };
+	enum { value = MetaTotient<N>::value };
 };
 
-template<int n>
-struct TotientSummatory
+template<int N>
+struct MetaTotientSummatory
 {
-	enum { value = MetaForLoop<1, n, 1, Add, Add, TotientVal>::value };
+	enum { value = MetaForLoop<1, N, 1, MetaAdd, MetaAdd, MetaTotientVal>::value };
 };
 
-template<int n, int x>
-struct Divisor
+template<int N, int X>
+struct MetaDivisor
 {
 	template<int Start, int End>
 	struct DivisorPow
 	{
-		enum { value = Divisible<Start, End>::value == 1 ? Power<Start, x>::value : 0 };
+		enum { value = MetaDivisible<Start, End>::value == 1 ? MetaIntPower<Start, X>::value : 0 };
 	};
 
-	enum { value = MetaForLoop<1, n, 1, Add, Add, DivisorPow>::value };
+	enum { value = MetaForLoop<1, N, 1, MetaAdd, MetaAdd, DivisorPow>::value };
 };
 
 #endif // _META_NUMBER_THEORY_

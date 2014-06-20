@@ -5,26 +5,6 @@
 
 const size_t SEQUENCE_SIZE = 100;
 
-// Square Root
-
-template<size_t Depth>
-double metaSquareRootHelp(const double x)
-{
-	double prev = metaSquareRootHelp<Depth - 1>(x);
-	return 0.5 * (prev + x / prev);
-}
-
-template<>
-double metaSquareRootHelp<0>(const double x)
-{
-	return x;
-}
-
-double metaSquareRoot(const double x)
-{
-	return metaSquareRootHelp<SEQUENCE_SIZE>(x);
-}
-
 // Pi
 
 template<size_t Depth>
@@ -61,6 +41,26 @@ double metaEHelp<SEQUENCE_SIZE>(const double acc)
 double metaE()
 {
 	return metaEHelp<1>(1);
+}
+
+// Square Root
+
+template<size_t Depth>
+double metaSquareRootHelp(const double x)
+{
+	double prev = metaSquareRootHelp<Depth - 1>(x);
+	return 0.5 * (prev + x / prev);
+}
+
+template<>
+double metaSquareRootHelp<0>(const double x)
+{
+	return x;
+}
+
+double metaSquareRoot(const double x)
+{
+	return metaSquareRootHelp<SEQUENCE_SIZE>(x);
 }
 
 // Exponent

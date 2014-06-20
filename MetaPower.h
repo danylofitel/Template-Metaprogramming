@@ -6,23 +6,20 @@
 template<size_t Pow, int Mul>
 struct MetaPowerIntHelp
 {
-	const int exp;
-	MetaPowerIntHelp() : exp((Pow & 1 ? Mul : 1) * (MetaPowerIntHelp<Pow / 2, Mul * Mul>().exp))
-	{
-	}
+	enum { value = (Pow & 1 ? Mul : 1) * (MetaPowerIntHelp<Pow / 2, Mul * Mul>::value) };
 };
 
 template<int Mul>
 struct MetaPowerIntHelp<0, Mul>
 {
-	const int exp = 1;
+	enum { value = 1 };
 };
 
 template<int Arg, size_t Pow>
-int metaPowerInt()
+struct MetaPowerInt
 {
-	return MetaPowerIntHelp<Pow, Arg>().exp;
-}
+	enum { value = MetaPowerIntHelp<Pow, Arg>::value };
+};
 
 template<class T, size_t Pow>
 struct MetaPowerHelp
@@ -53,23 +50,14 @@ double metaPower(const T & x)
 template<int Arg, size_t Pow>
 struct MetaPowerIntLinear
 {
-	const int pow;
-	MetaPowerIntLinear() : pow(Arg * MetaPowerIntLinear<Arg, Pow - 1>().pow)
-	{
-	}
+	enum { value = Arg * MetaPowerIntLinear<Arg, Pow - 1>::value };
 };
 
 template<int Arg>
 struct MetaPowerIntLinear<Arg, 0>
 {
-	const int pow = 1;
+	enum { value = 1};
 };
-
-template<int Arg, size_t Pow>
-int metaPowerIntLinear()
-{
-	return MetaPowerIntLinear<Arg, Pow>().pow;
-}
 
 template<class T, size_t Pow>
 struct MetaPowerLinearHelp

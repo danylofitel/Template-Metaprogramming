@@ -13,6 +13,24 @@ struct MetaFactorial<0>
 	enum { value = 1 };
 };
 
+template <size_t N>
+struct MetaDoubleFactorial
+{
+	enum { value = N * MetaDoubleFactorial<N - 2>::value };
+};
+
+template <>
+struct MetaDoubleFactorial<0>
+{
+	enum { value = 1 };
+};
+
+template <>
+struct MetaDoubleFactorial<1>
+{
+	enum { value = 1 };
+};
+
 template<size_t N, size_t K>
 struct MetaArrangements
 {

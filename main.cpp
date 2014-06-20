@@ -25,26 +25,31 @@ int main()
 	cout << endl;
 
 	cout << "Number Theory" << endl;
-	cout << Divisible<5, 2>::value << endl;
-	cout << DivisibleDigit<5, 2>::value << endl;
-	cout << IsEven<111>::value << endl;
-	cout << IsOdd<112>::value << endl;
-	cout << GCD<15, 10>().value << endl;
-	cout << LCM<15, 10>().value << endl;
-	cout << CoPrime<190, 189>::value << endl;
-	cout << Power<2, 10>::value << endl;
-	cout << NoOfDivisor<25>::value << endl;
-	cout << IsPrime<191>::value << endl;
-	cout << SumOfDivisor<66>::value << endl;
-	cout << IsPerfect<28>::value << endl;
-	cout << Totient<99>::value << endl;
-	cout << TotientVal<100>::value << endl;
-	cout << TotientSummatory<10>::value << endl;
-	cout << Divisor<20, 5>::value << endl;
+	cout << MetaDivisible<5, 2>::value << endl;
+	cout << MetaDivisibleDigit<5, 2>::value << endl;
+	cout << MetaIsEven<111>::value << endl;
+	cout << MetaIsOdd<112>::value << endl;
+	cout << MetaGCD<15, 10>().value << endl;
+	cout << MetaLCM<15, 10>().value << endl;
+	cout << MetaCoPrime<190, 189>::value << endl;
+	cout << MetaIntPower<2, 10>::value << endl;
+	cout << MetaNoOfDivisor<25>::value << endl;
+	cout << MetaIsPrime<191>::value << endl;
+	cout << MetaSumOfDivisor<66>::value << endl;
+	cout << MetaIsPerfect<28>::value << endl;
+	cout << MetaTotient<99>::value << endl;
+	cout << MetaTotientVal<100>::value << endl;
+	cout << MetaTotientSummatory<10>::value << endl;
+	cout << MetaDivisor<20, 5>::value << endl;
 	cout << endl;
 
 	cout << "Factorial" << endl;
 	cout << MetaFactorial<10>::value << endl;
+	cout << endl;
+
+	cout << "Double Factorial" << endl;
+	cout << MetaDoubleFactorial<9>::value << endl;
+	cout << MetaDoubleFactorial<10>::value << endl;
 	cout << endl;
 
 	cout << "Arrangements" << endl;
@@ -56,8 +61,8 @@ int main()
 	cout << endl;
 
 	cout << "Power of Integer" << endl;
-	cout << metaPowerInt<-2, 20>() << endl;
-	cout << metaPowerIntLinear<-2, 11>() << endl;
+	cout << MetaPowerInt<-2, 11>::value << endl;
+	cout << MetaPowerIntLinear<2, 10>::value << endl;
 	cout << endl;
 
 	cout << "Power" << endl;
@@ -66,8 +71,8 @@ int main()
 	cout << endl;
 
 	cout << "Prime Check" << endl;
-	cout << metaPrimeCheck<271>() << endl;
-	cout << metaPrimeCheckLinear<12>() << endl;
+	cout << MetaPrimeCheck<271>::value << endl;
+	cout << MetaPrimeCheckLinear<24>::value << endl;
 	cout << endl;
 
 	cout << "Prime Print" << endl;
@@ -75,13 +80,9 @@ int main()
 	cout << endl;
 
 	cout << "Fibonacci" << endl;
-	cout << metaFibonacci<1000>() << endl;
-	cout << metaFibonacciLinear<100>() << endl;
-	cout << metaFibonacciExponential<10>() << endl;
-	cout << endl;
-
-	cout << "Square Root" << endl;
-	cout << metaSquareRoot(2) << endl;
+	cout << MetaFibonacci<40>::value << endl;
+	cout << MetaFibonacciLinear<20>::value << endl;
+	cout << MetaFibonacciExponential<10>::value << endl;
 	cout << endl;
 
 	cout << "Pi" << endl;
@@ -90,6 +91,10 @@ int main()
 
 	cout << "E" << endl;
 	cout << metaE() << endl;
+	cout << endl;
+
+	cout << "Square Root" << endl;
+	cout << metaSquareRoot(2) << endl;
 	cout << endl;
 
 	cout << "Exponent" << endl;

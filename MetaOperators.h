@@ -2,31 +2,31 @@
 #define _META_OPERATORS_H_
 
 template<int U, int V = 0>
-struct Add
+struct MetaAdd
 {
 	enum { value = U + V };
 };
 
 template<int U, int V = 0>
-struct Subtract
+struct MetaSubtract
 {
 	enum { value = U - V };
 };
 
 template<int U, int V = 1>
-struct Multiply
+struct MetaMultiply
 {
 	enum { value = U * V };
 };
 
 template<int U, int V = 1>
-struct Divide
+struct MetaDivide
 {
 	enum { value = U / V };
 };
 
 template<int U, int V>
-struct Mod
+struct MetaMod
 {
 	enum { value = U % V };
 };
