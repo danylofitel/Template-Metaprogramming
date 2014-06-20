@@ -3,25 +3,25 @@
 
 #include <exception>
 
-const size_t SEQUENCE_SIZE = 100;
+const size_t SEQUENCE_SIZE = 200;
 
 // Pi
 
 template<size_t Depth>
-double metaPiHelp(const bool positive)
+double metaPiHelp()
 {
-	return (positive ? 1.0 : -1.0) / ((2 * Depth) * (2 * Depth + 1) * (2 * Depth + 2)) + metaPiHelp<Depth + 1>(!positive);
+	return ((Depth % 2) ? 1.0 : -1.0) / ((2 * Depth) * (2 * Depth + 1) * (2 * Depth + 2)) + metaPiHelp<Depth + 1>();
 }
 
 template<>
-double metaPiHelp<SEQUENCE_SIZE>(const bool positive)
+double metaPiHelp<SEQUENCE_SIZE>()
 {
-	return (positive ? 1.0 : -1.0) / ((2 * SEQUENCE_SIZE) * (2 * SEQUENCE_SIZE + 1) * (2 * SEQUENCE_SIZE + 2));
+	return ((SEQUENCE_SIZE % 2) ? 1.0 : -1.0) / ((2 * SEQUENCE_SIZE) * (2 * SEQUENCE_SIZE + 1) * (2 * SEQUENCE_SIZE + 2));
 }
 
 double metaPi()
 {
-	return 3.0 + 4.0 * metaPiHelp<1>(true);
+	return 3.0 + 4.0 * metaPiHelp<1>();
 }
 
 // E
@@ -164,7 +164,7 @@ template<size_t Depth>
 struct MetaSinHelp
 {
 	const double val;
-	MetaSinHelp(const double x2, const double xn, const double coeff, const bool positive) : val((positive ? 1.0 : -1.0) * xn * coeff + MetaSinHelp<Depth + 1>(x2, xn * x2, coeff / ((2 * Depth) * (2 * Depth + 1)), !positive).val)
+	MetaSinHelp(const double x2, const double xn, const double coeff) : val(((Depth % 2) ? 1.0 : -1.0) * xn * coeff + MetaSinHelp<Depth + 1>(x2, xn * x2, coeff / ((2 * Depth) * (2 * Depth + 1))).val)
 	{
 	}
 };
@@ -173,14 +173,14 @@ template<>
 struct MetaSinHelp<SEQUENCE_SIZE>
 {
 	const double val;
-	MetaSinHelp(const double x2, const double xn, const double coeff, const bool positive) : val((positive ? 1.0 : -1.0) * xn * coeff)
+	MetaSinHelp(const double x2, const double xn, const double coeff) : val(((SEQUENCE_SIZE % 2) ? 1.0 : -1.0) * xn * coeff)
 	{
 	}
 };
 
 double MetaSin(const double x)
 {
-	return MetaSinHelp<1>(x * x, x, 1, true).val;
+	return MetaSinHelp<1>(x * x, x, 1).val;
 }
 
 // Cos
@@ -189,7 +189,7 @@ template<size_t Depth>
 struct MetaCosHelp
 {
 	const double val;
-	MetaCosHelp(const double x2, const double xn, const double coeff, const bool positive) : val((positive ? 1.0 : -1.0) * xn * coeff + MetaCosHelp<Depth + 1>(x2, xn * x2, coeff / ((2 * Depth - 1) * (2 * Depth)), !positive).val)
+	MetaCosHelp(const double x2, const double xn, const double coeff) : val(((Depth % 2) ? 1.0 : -1.0) * xn * coeff + MetaCosHelp<Depth + 1>(x2, xn * x2, coeff / ((2 * Depth - 1) * (2 * Depth))).val)
 	{
 	}
 };
@@ -198,14 +198,14 @@ template<>
 struct MetaCosHelp<SEQUENCE_SIZE>
 {
 	const double val;
-	MetaCosHelp(const double x2, const double xn, const double coeff, const bool positive) : val((positive ? 1.0 : -1.0) * xn * coeff)
+	MetaCosHelp(const double x2, const double xn, const double coeff) : val(((SEQUENCE_SIZE % 2) ? 1.0 : -1.0) * xn * coeff)
 	{
 	}
 };
 
 double MetaCos(const double x)
 {
-	return MetaCosHelp<1>(x * x, 1, 1, true).val;
+	return MetaCosHelp<1>(x * x, 1, 1).val;
 }
 
 // Sinh
