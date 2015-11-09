@@ -9,8 +9,15 @@
 #include "MetaTaylorSeries.h"
 #include "MetaBubbleSort.h"
 #include "MetaBitset.h"
+#include "MetaTuringMachine.h"
 
 using namespace std;
+
+template<>
+char const* Input<-1>::name = "_";
+
+char const* QAccept::name = "qaccept";
+char const* QReject::name = "qreject";
 
 int main()
 {
@@ -151,6 +158,35 @@ int main()
 	cout << bitset.B6 << endl;
 	cout << bitset.B7 << endl;
 	cout << bitset.SUM << endl;
+	cout << endl;
+
+	cout << "Turing Machine" << endl;
+
+	DEF_INPUT(1, x);
+	DEF_INPUT(2, x_mark);
+	DEF_INPUT(3, split);
+
+	DEF_STATE(0, start);
+	DEF_STATE(1, find_blank);
+	DEF_STATE(2, go_back);
+
+	/* syntax:  State, Input, NewState, Output, Move */
+	typedef TypeList<
+		Rule<start, x, find_blank, x_mark, Right>,
+		Rule<find_blank, x, find_blank, x, Right>,
+		Rule<find_blank, split, find_blank, split, Right>,
+		Rule<find_blank, InputBlank, go_back, x, Left>,
+		Rule<go_back, x, go_back, x, Left>,
+		Rule<go_back, split, go_back, split, Left>,
+		Rule<go_back, x_mark, start, x, Right>,
+		Rule<start, split, QAccept, split, Left >> rules;
+
+	/* syntax: initial input, rules, start state */
+	typedef TuringMachine<TypeList<x, x, x, x, split>, rules, start> double_it;
+	static_assert(IsSame<double_it::end_input,
+		TypeList<x, x, x, x, split, x, x, x, x >> ::value,
+		"Hmm... This is borky!");
+
 	cout << endl;
 	
 	return 0;

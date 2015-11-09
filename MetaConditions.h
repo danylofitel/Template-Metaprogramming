@@ -4,13 +4,13 @@
 struct FalseType
 {
 	typedef FalseType Type;
-	enum { Value = 0 };
+	enum { value = 0 };
 };
 
 struct TrueType
 {
 	typedef TrueType Type;
-	enum { Value = 1 };
+	enum { value = 1 };
 };
 
 template<bool Condition, class Then, class Else>

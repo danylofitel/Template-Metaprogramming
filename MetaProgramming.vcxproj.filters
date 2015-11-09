@@ -59,5 +59,8 @@
     <ClInclude Include="MetaOperators.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MetaTuringMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

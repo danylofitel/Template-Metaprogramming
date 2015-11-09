@@ -12,13 +12,13 @@ struct MetaPrimeCheckHelp
 	typedef
 		typename If<(C * C > N), TrueType,
 		typename If<(N % C == 0), FalseType, MetaPrimeCheckHelp<N, C + 1>>::Type>::Type Type;
-	enum { Value = Type::Value };
+	enum { value = Type::value };
 };
 
 template<size_t N>
 struct MetaPrimeCheck
 {
-	enum { value = MetaPrimeCheckHelp<N, 2>::Value };
+	enum { value = MetaPrimeCheckHelp<N, 2>::value };
 };
 
 template<>
